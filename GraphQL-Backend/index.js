@@ -17,11 +17,11 @@ let authors = [
     id: "afa5b6f1-344d-11e9-a414-719c6709cf3e",
     born: 1821
   },
-  { 
+  {
     name: 'Joshua Kerievsky', // birthyear not known
     id: "afa5b6f2-344d-11e9-a414-719c6709cf3e",
   },
-  { 
+  {
     name: 'Sandi Metz', // birthyear not known
     id: "afa5b6f3-344d-11e9-a414-719c6709cf3e",
   },
@@ -61,7 +61,7 @@ let books = [
     author: 'Joshua Kerievsky',
     id: "afa5de01-344d-11e9-a414-719c6709cf3e",
     genres: ['refactoring', 'patterns']
-  },  
+  },
   {
     title: 'Practical Object-Oriented Design, An Agile Primer Using Ruby',
     published: 2012,
@@ -129,18 +129,23 @@ const typeDefs = gql`
     
   }
 `
-const resolvers = { 
+const resolvers = {
   Query: {
     hello: () => { return "world" },
-    bookCount: () => { return books.length},
+    bookCount: () => { return books.length },
     authorCount: () => authors.length,
     allAuthors: () => authors,
-    allBooks: (root, args) => { 
+    allBooks: (root, args) => {
       console.log("args: ", args)
       console.log("root: ", root)
-      let boo = books.filter(b => (b.author === args.author) && (b.genres.includes(args.genre)))
-      console.log("boo: ", boo)
-      return boo
+      //console.log("books: ", books)
+      if (args.author === undefined && args.genre === undefined) {
+        return books
+      } else {
+        let boo = books.filter(b => (b.author === args.author) && (b.genres.includes(args.genre)))
+        console.log("boo: ", boo)
+        return boo
+      }
     }
   },
   Author: {
@@ -160,10 +165,10 @@ const resolvers = {
       console.log("args: ", args)
       let editThisPerson = authors.find(a => a.name === args.name)
       console.log("editThisPerson: ", editThisPerson)
-      if (!editThisPerson) { 
-        return editThisPerson 
+      if (!editThisPerson) {
+        return editThisPerson
       } else {
-        let updP = {...editThisPerson, born: args.setBornTo}
+        let updP = { ...editThisPerson, born: args.setBornTo }
         authors = authors.map(a => a.name === editThisPerson.name ? updP : a)
         console.log("updP:", updP)
         return updP
