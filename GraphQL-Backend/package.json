@@ -1,0 +1,25 @@
+{
+  "name": "graphql-backend",
+  "version": "1.0.0",
+  "description": "\"HY fullstack round 8 on graphQL\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "Mai",
+  "license": "Unlicense",
+  "dependencies": {
+    "apollo-server": "^2.9.14",
+    "graphql": "^14.5.8",
+    "nodemon": "^2.0.2"
+  }
+}
