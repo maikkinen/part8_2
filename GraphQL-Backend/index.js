@@ -136,12 +136,12 @@ const resolvers = {
     authorCount: () => authors.length,
     allAuthors: () => authors,
     allBooks: (root, args) => {
-      console.log("args: ", args)
-      console.log("root: ", root)
+      //console.log("args: ", args)
+      //console.log("root: ", root)
       //console.log("books: ", books)
       if (args.author === undefined && args.genre === undefined) {
         return books
-      } else {
+      } else { //Tää tekee tän nyt tyhmästi, koska sekä auth että genre pitää olla defined parametreissa, muuten palauttaa tyhjää.
         let boo = books.filter(b => (b.author === args.author) && (b.genres.includes(args.genre)))
         console.log("boo: ", boo)
         return boo
@@ -151,26 +151,28 @@ const resolvers = {
   Author: {
     bookCount: (root, args) => {
       let authorsWorkNr = books.filter(b => b.author === root.name).length
-      console.log("authWorkNr: ", authorsWorkNr)
+      //console.log("authWorkNr: ", authorsWorkNr)
       return authorsWorkNr //Note: do not wrap in { }! Sos happens!
     }
   },
   Mutation: {
     addBook: (root, args) => {
+      console.log("args: ", args)
+      console.log("root: ", root)
       const newBook = { ...args, id: uuid() }
       books = books.concat(newBook)
       return newBook
     },
     editAuthor: (root, args) => {
-      console.log("args: ", args)
+      //console.log("args: ", args)
       let editThisPerson = authors.find(a => a.name === args.name)
-      console.log("editThisPerson: ", editThisPerson)
+      //console.log("editThisPerson: ", editThisPerson)
       if (!editThisPerson) {
         return editThisPerson
       } else {
         let updP = { ...editThisPerson, born: args.setBornTo }
         authors = authors.map(a => a.name === editThisPerson.name ? updP : a)
-        console.log("updP:", updP)
+        //console.log("updP:", updP)
         return updP
       }
     }

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
-import { Query, ApolloConsumer } from 'react-apollo'
+import YearForm from './components/YearForm'
+import { Query, ApolloConsumer, Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
 
@@ -26,8 +27,37 @@ const ALL_AUTHORS = gql`
 }
 `
 
+const CREATE_BOOK = gql`
+mutation addBook($title: String!, $published: Int, $author: String, $genres: [String]) {
+  addBook(title: $title, author: $author, published: $published, genres: $genres) {
+    title
+    author
+    published
+    genres
+    id
+  }
+}
+`
+
+const SET_BIRTHYEAR = gql`
+mutation editAuthor($name: String!, $setBornTo: Int!) {
+  editAuthor(name: $name, setBornTo: $setBornTo) {
+    name
+    setBornTo
+  }
+}
+`
+
 const App = () => {
   const [page, setPage] = useState('authors')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleError = (error) => {
+    setErrorMessage(error.graphQLErrors[0].message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 5000)
+  }
 
   return (
     <div>
@@ -57,10 +87,24 @@ const App = () => {
         )}
       </ApolloConsumer>
 
-      <NewBook
-        show={page === 'add'}
-      />
+      <Mutation
+        mutation={CREATE_BOOK} //Tällä pelityylillä kirjailijalista ei päivity, jos lisätään uusi teos. Not najs!
+        refetchQueries={[{ query: ALL_BOOKS }]}
+        onError={handleError}> 
+        {(addBook) =>
+          <NewBook
+            addBook={addBook} show={page === 'add'}
+          />}
+      </Mutation>
 
+      <Mutation
+        mutation={SET_BIRTHYEAR}>
+          {(editAuthor) => 
+          <YearForm
+            editAuthor={editAuthor} show={page === 'authors'}
+          />}
+
+        </Mutation>
     </div>
   )
 }

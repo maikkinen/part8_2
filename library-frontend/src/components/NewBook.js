@@ -7,12 +7,18 @@ const NewBook = (props) => {
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
 
+  //console.log("props", props.addBook)
+
   if (!props.show) {
     return null
   }
 
   const submit = async (e) => {
     e.preventDefault()
+
+    await props.addBook({
+      variables: {title, author, published, genres } //id ?? Sitähän käyttäjä ei tietty anna, vaan se tulee jotenki konepellin alta. 
+    })
 
     console.log('add book...')
 
@@ -30,6 +36,7 @@ const NewBook = (props) => {
 
   return (
     <div>
+      <h2>new book</h2>
       <form onSubmit={submit}>
         <div>
           title
@@ -50,7 +57,7 @@ const NewBook = (props) => {
           <input
             type='number'
             value={published}
-            onChange={({ target }) => setPublished(target.value)}
+            onChange={({ target }) => setPublished(target.value)} //Täällä on nyt ehkä sos, tuleeko Stringejä eikä inttejä? --> parseInt()
           />
         </div>
         <div>
