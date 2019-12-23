@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { gql } from 'apollo-boost'
+import { Query, ApolloConsumer, Mutation } from 'react-apollo'
+import { useQuery, useMutation, useApolloClient, getDataFromTree } from '@apollo/react-hooks'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import YearForm from './components/YearForm'
-import { Query, ApolloConsumer, Mutation } from 'react-apollo'
-import { gql } from 'apollo-boost'
-
 
 const ALL_BOOKS = gql`
 {
