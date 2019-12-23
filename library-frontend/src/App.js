@@ -61,6 +61,23 @@ const App = () => {
     }, 5000)
   }
 
+  const client = useApolloClient()
+
+  const authors = useQuery(ALL_AUTHORS)
+  const books = useQuery(ALL_BOOKS)
+
+  const [addBook] = useMutation(CREATE_BOOK, {
+    onError: handleError,
+    refetchQueries: [{ query: ALL_BOOKS }]
+  })
+
+  const [editAuthor] = useMutation(SET_BIRTHYEAR)
+
+  const errorNotification = () => errorMessage &&
+    <div style={{ color: 'red'}}>
+      {errorMessage}
+    </div>
+
   return (
     <div>
       <div>
@@ -69,44 +86,14 @@ const App = () => {
         <button onClick={() => setPage('add')}>add book</button>
       </div>
 
-      <ApolloConsumer>
-        {(client =>
-          <Query query={ALL_AUTHORS}>
-            {(result) => <Authors
-              show={page === 'authors'} result={result} client={client}
-            />}
-          </Query>
-        )}
-      </ApolloConsumer>
+      <Authors show={page === 'authors'} result={authors} />
 
-      <ApolloConsumer>
-        {(client =>
-          <Query query={ALL_BOOKS}>
-            {(result) => <Books
-              show={page === 'books'} result={result} client={client}
-            />}
-          </Query>
-        )}
-      </ApolloConsumer>
+      <Books show={page === 'books'} result={books}/>
 
-      <Mutation
-        mutation={CREATE_BOOK} //Tällä pelityylillä kirjailijalista ei päivity, jos lisätään uusi teos. Not najs!
-        refetchQueries={[{ query: ALL_BOOKS }]}
-        onError={handleError}>
-        {(addBook) =>
-          <NewBook
-            addBook={addBook} show={page === 'add'}
-          />}
-      </Mutation>
+      <NewBook show={page === 'books'} addBook={addBook} />
+      
+      <YearForm show={page === 'authors'} editAuthor={editAuthor} />
 
-      <Mutation
-        mutation={SET_BIRTHYEAR}>
-        {(editAuthor) =>
-          <YearForm
-            editAuthor={editAuthor} show={page === 'authors'}
-          />}
-
-      </Mutation>
     </div>
   )
 }

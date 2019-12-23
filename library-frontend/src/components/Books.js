@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 import React from 'react'
 import { gql } from 'apollo-boost'
 import { useApolloClient } from '@apollo/react-hooks'

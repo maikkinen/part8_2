@@ -1,12 +1,29 @@
-import React, { useState } from 'react'
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react'
+import { gql } from 'apollo-boost'
+import { useApolloClient } from '@apollo/react-hooks'
 
 const Authors = ({ result }) => {
-  if (result.loading) {
-    return <div> ..loading </div> 
-  }
-  const authors = result.data.allAuthors
+  const client = useApolloClient()
+  const [authors, setAuthors] = useState(null)
 
-  console.log("authors: ", authors)
+  const findAuthors = () => {
+    const { data } = result.data.allAuthors
+    console.log('data', data)
+    setAuthors(data)
+  }
+
+  useEffect( async () => {
+    await findAuthors()
+  }, [])
+
+
+  if (result.loading) {
+    return <div> ..loading </div>
+  }
+
+  console.log('authors: ', authors)
 
   return (
     <div>

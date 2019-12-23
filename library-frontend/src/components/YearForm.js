@@ -27,7 +27,7 @@ const YearForm = (props) => {
 
   return (
     <div>
-      <h4>Update authors</h4>
+      <h4>update author info</h4>
       <form onSubmit={submit}>
         <div>
           name

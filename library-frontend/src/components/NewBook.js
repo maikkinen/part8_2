@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import React, { useState } from 'react'
 
 const NewBook = (props) => {
@@ -17,7 +18,7 @@ const NewBook = (props) => {
     e.preventDefault()
 
     await props.addBook({
-      variables: {title, author, published, genres } //id ?? Sitähän käyttäjä ei tietty anna, vaan se tulee jotenki konepellin alta. 
+      variables: { title, author, published, genres } //id ?? Sitähän käyttäjä ei tietty anna, vaan se tulee jotenki konepellin alta. 
     })
 
     console.log('add book...')
