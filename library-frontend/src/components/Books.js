@@ -6,14 +6,14 @@ const Books = ({ result, show }) => {
   if (result.loading) {
     return <div> ...getting there soon...</div>
   }
-  
+
   if (!show) {
     return null
   }
 
   const books = result.data.allBooks
 
-  console.log("books: ", books)
+  console.log('books: ', books)
 
   return (
     <div>

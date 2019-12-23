@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ApolloClient from 'apollo-boost'

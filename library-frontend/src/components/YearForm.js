@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 import React, { useState } from 'react'
 
 const YearForm = (props) => {
@@ -14,7 +16,7 @@ const YearForm = (props) => {
     e.preventDefault()
 
     await props.editAuthor({ //Tää syntaksi on selvästi väärä...how to fix?
-      variables: {name, year} //Tässä pitäis varmaan parseInt(year)
+      variables: { name, year } //Tässä pitäis varmaan parseInt(year)
     })
 
     console.log('edit author info...')

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 import React, { useState, useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { Query, ApolloConsumer, Mutation } from 'react-apollo'
@@ -90,7 +92,7 @@ const App = () => {
       <Mutation
         mutation={CREATE_BOOK} //Tällä pelityylillä kirjailijalista ei päivity, jos lisätään uusi teos. Not najs!
         refetchQueries={[{ query: ALL_BOOKS }]}
-        onError={handleError}> 
+        onError={handleError}>
         {(addBook) =>
           <NewBook
             addBook={addBook} show={page === 'add'}
@@ -99,12 +101,12 @@ const App = () => {
 
       <Mutation
         mutation={SET_BIRTHYEAR}>
-          {(editAuthor) => 
+        {(editAuthor) =>
           <YearForm
             editAuthor={editAuthor} show={page === 'authors'}
           />}
 
-        </Mutation>
+      </Mutation>
     </div>
   )
 }
