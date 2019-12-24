@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
-import { Query, ApolloConsumer, Mutation } from 'react-apollo'
-import { useQuery, useMutation, useApolloClient, getDataFromTree } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
@@ -61,9 +60,8 @@ const App = () => {
     }, 5000)
   }
 
-  const client = useApolloClient()
-
   const authors = useQuery(ALL_AUTHORS)
+  console.log('authors in App: ', authors )
   const books = useQuery(ALL_BOOKS)
 
   const [addBook] = useMutation(CREATE_BOOK, {
@@ -74,7 +72,7 @@ const App = () => {
   const [editAuthor] = useMutation(SET_BIRTHYEAR)
 
   const errorNotification = () => errorMessage &&
-    <div style={{ color: 'red'}}>
+    <div style={{ color: 'red' }}>
       {errorMessage}
     </div>
 
